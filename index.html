@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowSky - Profesyonel Liquid Glass Hava Durumu</title>
+    <!-- Google Fonts - Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS File -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-sunny">
+    <!-- Dynamic Background Blobs -->
+    <div class="liquid-background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <!-- Top Navigation / Search Section -->
+        <header class="search-bar-container glass-card">
+            <div class="brand">
+                <i data-lucide="cloud-sun" class="brand-icon"></i>
+                <h1 class="brand-title">GlowSky</h1>
+            </div>
+            
+            <div class="search-wrapper">
+                <div class="search-input-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="city-search" placeholder="Şehir ara (örn. İstanbul, Londra...)" autocomplete="off">
+                    <button id="clear-search" class="btn-icon" aria-label="Aramayı Temizle" style="display: none;">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <!-- Search Suggestions Dropdown -->
+                <ul id="suggestions-list" class="suggestions-dropdown glass-card" style="display: none;"></ul>
+            </div>
+
+            <div class="controls-wrapper">
+                <button id="btn-geolocation" class="btn-action glass-btn" title="Konumumu Kullan">
+                    <i data-lucide="map-pin"></i>
+                    <span>Konum</span>
+                </button>
+                <div class="unit-toggle-container glass-card">
+                    <button id="unit-c" class="unit-btn active">°C</button>
+                    <button id="unit-f" class="unit-btn">°F</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Weather Main Dashboard -->
+        <section class="dashboard-grid">
+            <!-- Left Side: Current Weather Card -->
+            <div class="left-panel">
+                <div class="current-weather-card glass-card animate-fade-in">
+                    <div class="weather-meta">
+                        <h2 id="location-name">Yükleniyor...</h2>
+                        <p id="current-date">-- --- ----</p>
+                    </div>
+                    
+                    <div class="weather-temp-block">
+                        <div class="weather-visual">
+                            <div class="dynamic-weather-icon" id="main-weather-icon">
+                                <i data-lucide="cloud-sun" class="weather-icon-large"></i>
+                            </div>
+                        </div>
+                        <div class="temperature-container">
+                            <span id="current-temp">--</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-status-wrapper">
+                        <p id="weather-description">Hava durumu verileri yükleniyor...</p>
+                        <div class="temp-range">
+                            <span id="temp-max"><i data-lucide="arrow-up" class="range-icon max-color"></i> En Yüksek: --°</span>
+                            <span class="divider">|</span>
+                            <span id="temp-min"><i data-lucide="arrow-down" class="range-icon min-color"></i> En Düşük: --°</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Metrics & Detailed Info -->
+            <div class="right-panel">
+                <!-- Metrics Grid (3x2 layout or 2x3 responsive) -->
+                <div class="metrics-grid">
+                    <!-- Humidity Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="droplets" class="metric-icon humidity-color"></i>
+                            <h3>Nem</h3>
+                        </div>
+                        <div class="metric-content">
+                            <span id="metric-humidity">--</span>
+                            <span class="metric-unit">%</span>
+                        </div>
+                        <div class="metric-footer">
+                            <span id="humidity-status">Normal</span>
+                        </div>
+                    </div>
+
+                    <!-- Wind Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="wind" class="metric-icon wind-color"></i>
+                            <h3>Rüzgar</h3>
+                        </div>
+                        <div class="metric-content">
+                            <span id="metric-wind">--</span>
+                            <span class="metric-unit" id="wind-unit">km/s</span>
+                        </div>
+                        <div class="metric-footer">
+                            <i data-lucide="navigation" id="wind-dir-icon" class="wind-direction-arrow"></i>
+                            <span id="wind-dir-text">Kuzey</span>
+                        </div>
+                    </div>
+
+                    <!-- UV Index Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="sun" class="metric-icon uv-color"></i>
+                            <h3>UV İndeksi</h3>
+                        </div>
+                        <div class="metric-content">
+                            <span id="metric-uv">--</span>
+                        </div>
+                        <div class="metric-footer">
+                            <span id="uv-status">Düşük</span>
+                        </div>
+                    </div>
+
+                    <!-- Pressure Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="gauge" class="metric-icon pressure-color"></i>
+                            <h3>Basınç</h3>
+                        </div>
+                        <div class="metric-content">
+                            <span id="metric-pressure">--</span>
+                            <span class="metric-unit">hPa</span>
+                        </div>
+                        <div class="metric-footer">
+                            <span id="pressure-status">Kararlı</span>
+                        </div>
+                    </div>
+
+                    <!-- Rain/Precipitation Probability Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="cloud-rain" class="metric-icon precipitation-color"></i>
+                            <h3>Yağış İhtimali</h3>
+                        </div>
+                        <div class="metric-content">
+                            <span id="metric-precipitation">--</span>
+                            <span class="metric-unit">%</span>
+                        </div>
+                        <div class="metric-footer">
+                            <span id="precipitation-status">Yağış beklenmiyor</span>
+                        </div>
+                    </div>
+
+                    <!-- Sun Times Card -->
+                    <div class="metric-card glass-card animate-fade-in">
+                        <div class="metric-header">
+                            <i data-lucide="sunrise" class="metric-icon sunrise-color"></i>
+                            <h3>Güneş</h3>
+                        </div>
+                        <div class="metric-sun-content">
+                            <div class="sun-time-item">
+                                <span class="sun-label">Gün Doğumu</span>
+                                <span id="metric-sunrise">--:--</span>
+                            </div>
+                            <div class="sun-time-item">
+                                <span class="sun-label">Gün Batımı</span>
+                                <span id="metric-sunset">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hourly Forecast Section -->
+        <section class="forecast-section glass-card animate-fade-in">
+            <h3 class="section-title"><i data-lucide="clock" class="sec-icon"></i> Saatlik Tahmin (Bugün)</h3>
+            <div class="hourly-forecast-container" id="hourly-forecast-list">
+                <!-- Hourly card template will be generated dynamically here -->
+                <div class="forecast-loading">Saatlik veriler yükleniyor...</div>
+            </div>
+        </section>
+
+        <!-- 7-Day Forecast Section -->
+        <section class="forecast-section glass-card animate-fade-in">
+            <h3 class="section-title"><i data-lucide="calendar" class="sec-icon"></i> 7 Günlük Tahmin</h3>
+            <div class="daily-forecast-container" id="daily-forecast-list">
+                <!-- Daily item template will be generated dynamically here -->
+                <div class="forecast-loading">Günlük veriler yükleniyor...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Error/Notification Toast -->
+    <div id="notification-toast" class="toast-card glass-card" style="display: none;">
+        <i data-lucide="alert-circle" class="toast-icon"></i>
+        <span id="notification-message">Bir hata oluştu.</span>
+    </div>
+
+    <!-- Script File -->
+    <script src="app.js"></script>
+</body>
+</html>
